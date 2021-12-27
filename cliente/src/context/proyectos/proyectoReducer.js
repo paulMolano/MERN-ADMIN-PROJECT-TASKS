@@ -4,6 +4,7 @@ import {
   OBTENER_PROYECTOS,
   VALIDAR_FORMULARIO,
   PROYECTO_ACTUAL,
+  ELIMINAR_PROYECTO,
 } from "../../types";
 
 const proyectoReducer = (state, action) => {
@@ -36,6 +37,15 @@ const proyectoReducer = (state, action) => {
         proyecto: state.proyectos.filter(
           (proyecto) => proyecto.id === action.payload
         ),
+      };
+
+    case ELIMINAR_PROYECTO:
+      return {
+        ...state,
+        proyectos: state.proyectos.filter(
+          (proyecto) => proyecto.id !== action.payload
+        ),
+        proyecto: null,
       };
 
     default:

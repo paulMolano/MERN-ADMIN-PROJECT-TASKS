@@ -11,6 +11,7 @@ import {
   AGREGAR_PROYECTO,
   VALIDAR_FORMULARIO,
   PROYECTO_ACTUAL,
+  ELIMINAR_PROYECTO,
 } from "../../types";
 
 const ProyectoState = (props) => {
@@ -64,10 +65,18 @@ const ProyectoState = (props) => {
   };
 
   //Selecciona el proyecto que el usuario le dio click
-  const proyectoActual = (proyecto) => {
+  const proyectoActual = (proyectoId) => {
     dispatch({
       type: PROYECTO_ACTUAL,
-      payload: proyecto,
+      payload: proyectoId,
+    });
+  };
+
+  //Eliminar proyecto
+  const eliminarProyecto = (proyectoId) => {
+    dispatch({
+      type: ELIMINAR_PROYECTO,
+      payload: proyectoId,
     });
   };
 
@@ -83,6 +92,7 @@ const ProyectoState = (props) => {
         agregarProyecto,
         mostrarError,
         proyectoActual,
+        eliminarProyecto,
       }}
     >
       {props.children}
