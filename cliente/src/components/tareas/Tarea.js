@@ -10,6 +10,7 @@ const Tarea = ({ tarea }) => {
     obtenerTareas,
     cambiarEstadoTarea,
     guardarTareaActual,
+    limpiarTarea,
   } = tareasContext;
 
   //Traer el proyecto actual
@@ -23,6 +24,7 @@ const Tarea = ({ tarea }) => {
   const tareaEliminar = (id) => {
     eliminarTarea(id);
     obtenerTareas(proyectoActual.id);
+    limpiarTarea();
   };
 
   //Función que modifica el estado de las tareas
