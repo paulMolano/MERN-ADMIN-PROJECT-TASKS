@@ -4,6 +4,7 @@ const {
   crearTarea,
   obtenerTareas,
   actualizarTarea,
+  eliminarTarea,
 } = require("../controllers/tareaController");
 const router = express.Router();
 const auth = require("../middleware/auth");
@@ -31,4 +32,6 @@ router.put(
   actualizarTarea
 );
 
+//Eliminar tarea
+router.delete("/:id", auth, eliminarTarea);
 module.exports = router;

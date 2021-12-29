@@ -1,7 +1,6 @@
 const Tarea = require("../models/Tarea");
 const Proyecto = require("../models/Proyecto");
 const { validationResult } = require("express-validator");
-const router = require("../routes/tareas");
 
 //Crea una nueva tarea
 exports.crearTarea = async (req, res) => {
@@ -106,6 +105,37 @@ exports.actualizarTarea = async (req, res) => {
 
     //retornamos como respuesta el proyecto ya editado
     res.json({ tarea });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ msg: "Hubo un error" });
+  }
+};
+
+exports.eliminarTarea = async (req, res) => {
+  try {
+    //Extraer proyecto y comprobar que existe
+    const { proyecto } = req.body;
+
+    //Revisar si la tarea existe o no
+    let tarea = await Tarea.findById(req.params.id);
+    if (!tarea) {
+      res.status(404).json({ msg: "Tarea inexistente" });
+    }
+
+    //Extraer proyecto
+    const existeProyecto = await Proyecto.findById(proyecto);
+
+    //revisar si el proyecto actual pertenece al usuario autenticado
+    if (existeProyecto.creador.toString() !== req.usuario.id) {
+      res.status(401).json({ msg: "No Autorizado" });
+    }
+
+    //eliminar
+    await Tarea.findOneAndRemove({
+      _id: req.params.id,
+    });
+
+    res.json({ msg: "Tarea eliminada" });
   } catch (error) {
     console.log(error);
     res.status(500).send({ msg: "Hubo un error" });
