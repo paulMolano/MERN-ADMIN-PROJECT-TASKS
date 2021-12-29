@@ -5,6 +5,7 @@ const {
   crearProyecto,
   obtenerProyectos,
   actualizarProyecto,
+  eliminarProyecto,
 } = require("../controllers/proyectoController");
 const auth = require("../middleware/auth");
 const { check } = require("express-validator");
@@ -28,5 +29,8 @@ router.put(
   [check("nombre", "El nombre del proyecto es obligatorio").not().isEmpty()],
   actualizarProyecto
 );
+
+//Eliminar un proyectoviaid
+router.delete("/:id", auth, eliminarProyecto);
 
 module.exports = router;
