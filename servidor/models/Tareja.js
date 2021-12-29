@@ -6,13 +6,17 @@ const TareaSchema = mongoose.Schema({
     required: true,
     trim: true,
   },
-  proyecto: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Proyecto",
+  estado: {
+    type: Boolean,
+    default: false,
   },
   creado: {
     type: Date,
     default: Date.now(),
+  },
+  proyecto: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Proyecto",
   },
 });
 
