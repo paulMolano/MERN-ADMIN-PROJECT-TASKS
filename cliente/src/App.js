@@ -7,14 +7,16 @@ import Proyectos from "./components/proyectos/Proyectos";
 import ProyectoState from "./context/proyectos/proyectoState";
 import TareaState from "./context/tareas/tareaState";
 import AlertaState from "./context/alertas/alertaState";
-import AutenticacionState from "./context/autenticacion/autenticacionState";
+import AuthState from "./context/autenticacion/authState";
 
 function App() {
+  console.log(process.env.REACT_APP_BACKEND_URL);
+
   return (
     <ProyectoState>
       <TareaState>
         <AlertaState>
-          <AutenticacionState>
+          <AuthState>
             <Router>
               <Routes>
                 <Route path="/" element={<Login />} />
@@ -22,7 +24,7 @@ function App() {
                 <Route path="proyectos" element={<Proyectos />} />
               </Routes>
             </Router>
-          </AutenticacionState>
+          </AuthState>
         </AlertaState>
       </TareaState>
     </ProyectoState>
