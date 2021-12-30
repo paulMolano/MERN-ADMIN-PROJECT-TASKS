@@ -22,7 +22,6 @@ const Login = () => {
   //Cuando el usuario quiere iniciar sesion
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(usuario);
 
     //Validar que no haya campos vacios
 

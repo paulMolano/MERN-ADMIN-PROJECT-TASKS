@@ -1,11 +1,26 @@
-import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import alertaContext from "../../context/alertas/alertaContext";
+import AuthContext from "../../context/autenticacion/authContext";
 
-const NuevaCuenta = () => {
+const NuevaCuenta = (props) => {
+  //Para redirigir al usuario
+  let history = useNavigate();
+
   //Extraer valores del context
   const alertasContext = useContext(alertaContext);
   const { alerta, mostrarAlerta } = alertasContext;
+
+  //Extraer valores del context
+  const authcontext = useContext(AuthContext);
+  const { mensaje, autenticado, registrarUsuario } = authcontext;
+
+  //En caso de que el usuario se haya autenticado o registrado o sea un registro duplicado
+  useEffect(() => {
+    if (autenticado) {
+      history("/proyectos");
+    }
+  }, [mensaje, autenticado, history]);
 
   //State para iniciar sesión
   const [nuevoUsuario, guardarnuevoUsuario] = useState({
@@ -29,7 +44,6 @@ const NuevaCuenta = () => {
   //Cuando el usuario quiere iniciar sesion
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(nuevoUsuario);
 
     //Validar que no haya campos vacios
     if (
@@ -58,6 +72,7 @@ const NuevaCuenta = () => {
     }
 
     //Pasarlo al action ESTA ES LA FUNCION QUE REGISTRA EL USUARIO
+    registrarUsuario({ nombre, email, password });
 
     //Limpiar los inputs
     // guardarnuevoUsuario({
