@@ -17,7 +17,9 @@ const authReducer = (state, action) => {
         mensaje: null,
       };
 
+    case LOGIN_ERROR:
     case REGISTRO_ERROR:
+      localStorage.removeItem("token");
       return {
         ...state,
         token: null,
@@ -28,9 +30,6 @@ const authReducer = (state, action) => {
       return {};
 
     case LOGIN_EXITOSO:
-      return {};
-
-    case LOGIN_ERROR:
       return {};
 
     case CERRAR_SESION:

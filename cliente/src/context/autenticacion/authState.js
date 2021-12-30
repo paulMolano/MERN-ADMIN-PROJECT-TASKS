@@ -47,6 +47,22 @@ const AuthState = (props) => {
     }
   };
 
+  //RETORNA EL USUARIO AUTENTICADO
+  const usuarioAutenticado = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      //TODO Funcion para enviar el token por headers
+    }
+
+    try {
+      const respuesta = await clienteAxios.get("/api/auth");
+    } catch (error) {
+      dispatch({
+        type: LOGIN_ERROR,
+      });
+    }
+  };
+
   return (
     <authContext.Provider
       value={{

@@ -20,6 +20,9 @@ const NuevaCuenta = (props) => {
     if (autenticado) {
       history("/proyectos");
     }
+    if (mensaje) {
+      mostrarAlerta(mensaje.msg, mensaje.categoria);
+    }
   }, [mensaje, autenticado, history]);
 
   //State para iniciar sesión
