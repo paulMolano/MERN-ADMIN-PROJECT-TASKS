@@ -57,15 +57,15 @@ const NuevaCuenta = () => {
       return;
     }
 
-    //Pasarlo al action
+    //Pasarlo al action ESTA ES LA FUNCION QUE REGISTRA EL USUARIO
 
     //Limpiar los inputs
-    guardarnuevoUsuario({
-      nombre: "",
-      email: "",
-      password: "",
-      confirmar: "",
-    });
+    // guardarnuevoUsuario({
+    //   nombre: "",
+    //   email: "",
+    //   password: "",
+    //   confirmar: "",
+    // });
   };
 
   return (
