@@ -9,6 +9,15 @@ import TareaState from "./context/tareas/tareaState";
 import AlertaState from "./context/alertas/alertaState";
 import AuthState from "./context/autenticacion/authState";
 
+import tokenAuth from "./config/tokenAuth";
+import RutaPrivada from "./components/rutas/Rutaprivada";
+
+//Revisar si tenemos un token
+const token = localStorage.getItem("token");
+if (token) {
+  tokenAuth(token);
+}
+
 function App() {
   return (
     <ProyectoState>
@@ -17,9 +26,17 @@ function App() {
           <AuthState>
             <Router>
               <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="nueva-cuenta" element={<NuevaCuenta />} />
-                <Route path="proyectos" element={<Proyectos />} />
+                <Route exact path="/" element={<Login />} />
+                <Route exact path="/nueva-cuenta" element={<NuevaCuenta />} />
+                <Route
+                  exact
+                  path="/proyectos"
+                  element={
+                    <RutaPrivada>
+                      <Proyectos />
+                    </RutaPrivada>
+                  }
+                />
               </Routes>
             </Router>
           </AuthState>

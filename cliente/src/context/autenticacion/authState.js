@@ -20,6 +20,7 @@ const AuthState = (props) => {
     autenticado: null,
     usuario: null,
     mensaje: null,
+    cargando: true,
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -58,13 +59,12 @@ const AuthState = (props) => {
     }
 
     try {
+      //Busca el usuario por el token y lo devuelve en json sin el password
       const respuesta = await clienteAxios.get("/api/auth");
       dispatch({
         type: OBTENER_USUARIO,
         payload: respuesta.data.usuario,
       });
-
-      //Obtener el usuario
     } catch (error) {
       console.log(error);
       dispatch({
@@ -98,6 +98,13 @@ const AuthState = (props) => {
     }
   };
 
+  //CIERRA LA SESION DEL USUARIO
+  const cerrarSesion = () => {
+    dispatch({
+      type: CERRAR_SESION,
+    });
+  };
+
   return (
     <authContext.Provider
       value={{
@@ -105,9 +112,11 @@ const AuthState = (props) => {
         autenticado: state.autenticado,
         usuario: state.usuario,
         mensaje: state.mensaje,
+        cargando: state.cargando,
         registrarUsuario,
         usuarioAutenticado,
         iniciarSesion,
+        cerrarSesion,
       }}
     >
       {props.children}
