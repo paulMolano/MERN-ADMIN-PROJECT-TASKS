@@ -76,14 +76,6 @@ const NuevaCuenta = (props) => {
 
     //Pasarlo al action ESTA ES LA FUNCION QUE REGISTRA EL USUARIO
     registrarUsuario({ nombre, email, password });
-
-    //Limpiar los inputs
-    // guardarnuevoUsuario({
-    //   nombre: "",
-    //   email: "",
-    //   password: "",
-    //   confirmar: "",
-    // });
   };
 
   return (

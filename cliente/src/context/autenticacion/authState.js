@@ -3,6 +3,7 @@ import authContext from "./authContext";
 import authReducer from "./authReducer";
 
 import clienteAxios from "../../config/axios";
+import tokenAuth from "../../config/tokenAuth";
 
 import {
   REGISTRO_EXITOSO,
@@ -27,15 +28,16 @@ const AuthState = (props) => {
   const registrarUsuario = async (datos) => {
     try {
       const respuesta = await clienteAxios.post("/api/usuarios", datos);
-      //el payload es el token que nos devuelven
-      console.log(respuesta.data);
 
       dispatch({
         type: REGISTRO_EXITOSO,
         payload: respuesta.data,
       });
+
+      //Obtener el usuario
+      usuarioAutenticado();
     } catch (error) {
-      console.log(error.response.data.msg);
+      // console.log(error.response.data.msg);
       const alerta = {
         msg: error.response.data.msg,
         categoria: "alerta-error",
@@ -52,13 +54,46 @@ const AuthState = (props) => {
     const token = localStorage.getItem("token");
     if (token) {
       //TODO Funcion para enviar el token por headers
+      tokenAuth(token);
     }
 
     try {
       const respuesta = await clienteAxios.get("/api/auth");
+      dispatch({
+        type: OBTENER_USUARIO,
+        payload: respuesta.data.usuario,
+      });
+
+      //Obtener el usuario
     } catch (error) {
+      console.log(error);
       dispatch({
         type: LOGIN_ERROR,
+      });
+    }
+  };
+
+  //Cuando el usuario inicia sesión
+  const iniciarSesion = async (datos) => {
+    try {
+      const respuesta = await clienteAxios.post("/api/auth", datos);
+
+      dispatch({
+        type: LOGIN_EXITOSO,
+        payload: respuesta.data,
+      });
+
+      //Obtener el usuario
+      usuarioAutenticado();
+    } catch (error) {
+      console.log(error.response.data.msg);
+      const alerta = {
+        msg: error.response.data.msg,
+        categoria: "alerta-error",
+      };
+      dispatch({
+        type: LOGIN_ERROR,
+        payload: alerta,
       });
     }
   };
@@ -71,6 +106,8 @@ const AuthState = (props) => {
         usuario: state.usuario,
         mensaje: state.mensaje,
         registrarUsuario,
+        usuarioAutenticado,
+        iniciarSesion,
       }}
     >
       {props.children}

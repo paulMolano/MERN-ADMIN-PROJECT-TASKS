@@ -10,6 +10,7 @@ import {
 const authReducer = (state, action) => {
   switch (action.type) {
     case REGISTRO_EXITOSO:
+    case LOGIN_EXITOSO:
       localStorage.setItem("token", action.payload.token);
       return {
         ...state,
@@ -27,10 +28,10 @@ const authReducer = (state, action) => {
       };
 
     case OBTENER_USUARIO:
-      return {};
-
-    case LOGIN_EXITOSO:
-      return {};
+      return {
+        ...state,
+        usuario: action.payload,
+      };
 
     case CERRAR_SESION:
       return {};
