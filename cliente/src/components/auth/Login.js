@@ -23,6 +23,7 @@ const Login = (props) => {
     if (mensaje) {
       mostrarAlerta(mensaje.msg, mensaje.categoria);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mensaje, autenticado, history]);
 
   //State para iniciar sesión

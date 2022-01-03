@@ -1,50 +1,45 @@
 import React, { useContext } from "react";
-import TareaContext from "../../context/tareas/tareaContext";
 import proyectoContext from "../../context/proyectos/proyectoContext";
+import tareaContext from "../../context/tareas/tareaContext";
 
 const Tarea = ({ tarea }) => {
-  //Traer del context la funcion agregarTarea
-  const tareasContext = useContext(TareaContext);
-  const {
-    eliminarTarea,
-    obtenerTareas,
-    cambiarEstadoTarea,
-    guardarTareaActual,
-    limpiarTarea,
-  } = tareasContext;
-
-  //Traer el proyecto actual
+  // Extrar si un proyecto esta activo
   const proyectosContext = useContext(proyectoContext);
   const { proyecto } = proyectosContext;
 
-  //Extraer el proyecto
+  // obtener la función del context de tarea
+  const tareasContext = useContext(tareaContext);
+  const { eliminarTarea, obtenerTareas, actualizarTarea, guardarTareaActual } =
+    tareasContext;
+
+  // Extraer el proyecto
   const [proyectoActual] = proyecto;
 
-  //Funcion cuando se presiona eliminar tarea
+  // Función que se ejecuta cuando el usuario presiona el btn de eliminar tarea
   const tareaEliminar = (id) => {
     eliminarTarea(id, proyectoActual._id);
     obtenerTareas(proyectoActual._id);
-    limpiarTarea();
   };
 
-  //Función que modifica el estado de las tareas
+  // Función que modifica el estado de las tareas
   const cambiarEstado = (tarea) => {
     if (tarea.estado) {
       tarea.estado = false;
     } else {
       tarea.estado = true;
     }
-    cambiarEstadoTarea(tarea);
+    actualizarTarea(tarea);
   };
 
-  //Agrega una tarea actual cuando el usuario desea editarla
+  // Agrega una tarea actual cuando el usuario desea editarla
   const seleccionarTarea = (tarea) => {
     guardarTareaActual(tarea);
   };
 
   return (
     <li className="tarea sombra">
-      <p>{tarea.nombre}</p>
+      <p>{tarea.nombre} </p>
+
       <div className="estado">
         {tarea.estado ? (
           <button
@@ -64,16 +59,16 @@ const Tarea = ({ tarea }) => {
           </button>
         )}
       </div>
+
       <div className="acciones">
         <button
           type="button"
           className="btn btn-primario"
-          onClick={() => {
-            seleccionarTarea(tarea);
-          }}
+          onClick={() => seleccionarTarea(tarea)}
         >
           Editar
         </button>
+
         <button
           type="button"
           className="btn btn-secundario"

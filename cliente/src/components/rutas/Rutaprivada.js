@@ -8,6 +8,7 @@ const RutaPrivada = ({ children }) => {
 
   useEffect(() => {
     usuarioAutenticado();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return !autenticado && !cargando ? <Navigate to="/" /> : children;
