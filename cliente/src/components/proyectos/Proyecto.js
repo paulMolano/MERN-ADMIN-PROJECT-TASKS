@@ -21,7 +21,7 @@ const Proyecto = ({ proyecto }) => {
   return (
     <li
       onClick={() => {
-        seleccionarProyecto(proyecto.id);
+        seleccionarProyecto(proyecto._id);
       }}
     >
       <button type="button" className="btn btn-blank">
